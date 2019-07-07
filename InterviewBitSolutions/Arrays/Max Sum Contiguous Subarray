@@ -1,0 +1,17 @@
+Hint : Kadane's Algorithm
+
+Code : 
+
+int Solution::maxSubArray(const vector<int> &A) {
+    if(A.size()==1)
+    return A[0];
+    int ans=INT_MIN,s=0;
+    for(int i=0;i<A.size();i++){
+        s = s + A[i];
+        if(s>ans)
+        ans = s;
+        if(s<0)
+        s=0;
+    }
+    return ans;
+}
