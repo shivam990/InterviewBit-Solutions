@@ -1,0 +1,43 @@
+Hint :
+Use variables for left right columns and top, bottom row, and move clockwise from left to right, top to bottom, right to left, bottom to top.
+
+Code;
+
+vector<vector<int> > Solution::generateMatrix(int A) {
+   vector<vector<int> >sol(A, vector<int>(A, 0));
+    int row = A;
+    int col = A;
+    int left = 0, right = A-1, top = 0, bottom = A-1;
+    int dir = 0,count=1;
+    while(left<=right && top<=bottom){
+        if(dir == 0){
+            for(int i=left;i<=right;i++){
+                sol[top][i] = count;
+                count++;
+            }
+            top++;dir=1;
+        }
+        if(dir == 1){
+            for(int i=top;i<=bottom;i++){
+                sol[i][right] = count;
+                count++;
+            }
+            right--;dir=2;
+        }
+        if(dir == 2){
+            for(int i=right;i>=left;i--){
+                sol[bottom][i] = count;
+                count++;
+            }
+            bottom--;dir=3;
+        }
+        if(dir == 3){
+            for(int i=bottom;i>=top;i--){
+                sol[i][left] = count;
+                count++;
+            }
+            left++;dir=0;
+        }
+    }
+    return sol;
+}
