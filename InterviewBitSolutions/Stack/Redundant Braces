@@ -1,0 +1,22 @@
+int Solution::braces(string str) {
+     stack<char> s;
+  for(int i=0;i<str.length();i++){
+    if(str[i]=='(' || str[i]=='+' || str[i]=='*' || str[i]=='-' || str[i]=='/')
+      s.push(str[i]);
+    else if(str[i]==')'){
+      int count = 0;
+      while(s.top()!='('){
+        if(s.top()=='+' || s.top()=='*' || s.top()=='-' || s.top()=='/')
+          count++;
+        s.pop();
+      }
+      s.pop();
+      //cout<<"count = "<<count<<endl;
+      if(count==0){
+        return 1;break;
+      }
+    }
+  }
+  return 0;
+
+}
