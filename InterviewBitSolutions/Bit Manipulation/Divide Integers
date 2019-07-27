@@ -1,0 +1,42 @@
+int Solution::divide(int A, int B) {
+    long long int dividend=(long long int)A;
+    long long int divisor=(long long int)B;
+    long long int sign;   // this will store the sign of final result
+    if(dividend<0 && divisor<0 || dividend>0 && divisor>0) //if both the dividend and divisor is of same sign then answer will be positive else negative
+    {
+        sign=1;
+    }
+    else
+    {
+        sign=-1;
+    }
+    dividend=abs(dividend); // take absolute values because we have already taken care of sign of final answer
+    divisor=abs(divisor);
+    if(dividend==0)  // zero divided by any number is 0
+    {
+        return 0;
+    }
+    else if(divisor==1)  // Dividing a number by 1 gives the number itself
+    {
+        long long int h=sign*dividend; // Find the answer by multiplying with the sign
+        if(h>INT_MAX || h<INT_MIN)  // check for overflow
+        {
+            return INT_MAX;
+        }
+        else
+        {
+            return h;
+        }
+    }
+   
+       
+    long long int ans=sign*(exp(log(dividend)-log(divisor))); 
+    if(ans>INT_MAX || ans<INT_MIN)  // again check for overflow
+    {
+        return INT_MAX;
+    }
+    else
+    {
+        return ans;  //return answer
+    }
+}
