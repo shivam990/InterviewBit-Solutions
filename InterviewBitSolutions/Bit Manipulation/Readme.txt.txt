@@ -1,0 +1,1 @@
+This Folder contains the solutions of Bit-Manipulation concepts.
