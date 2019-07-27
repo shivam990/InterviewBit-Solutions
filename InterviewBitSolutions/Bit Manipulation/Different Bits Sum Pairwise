@@ -1,0 +1,17 @@
+int Solution::cntBits(vector<int> &A) {
+    int n = A.size();
+    long long int count = 0, ans = 0, mod = 1000000007;
+    
+    for(int i=0;i<31;i++){
+        count = 0;
+        for(int j=0;j<n;j++){
+            if(A[j] & (1<<i))
+            count++;
+        }
+        ans += (count * (n - count) * 2)%mod;
+        if(ans >= mod)
+        ans = ans - mod;
+    }
+    return ans;
+    
+}
