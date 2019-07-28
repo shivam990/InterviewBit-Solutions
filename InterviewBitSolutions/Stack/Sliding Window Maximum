@@ -1,0 +1,37 @@
+vector<int> Solution::slidingMaximum(const vector<int> &arr, int k) {
+    int n = arr.size();
+    std::deque<int>  Qi(k);
+ vector<int> b;
+    /* Process first k (or first window) elements of array */
+    int i;
+    for (i = 0; i < k; ++i)
+    {
+        while ( (!Qi.empty()) && arr[i] >= arr[Qi.back()])
+            Qi.pop_back();  // Remove from rear
+ 
+        // Add new element at rear of queue
+        Qi.push_back(i);
+    }
+ 
+    // Process rest of the elements, i.e., from arr[k] to arr[n-1]
+    for ( ; i < n; ++i)
+    {
+        cout << arr[Qi.front()] << " ";
+ 
+        // Remove the elements which are out of this window
+        while ( (!Qi.empty()) && Qi.front() <= i - k)
+            Qi.pop_front();  // Remove from front of queue
+ 
+      
+        while ( (!Qi.empty()) && arr[i] >= arr[Qi.back()])
+            Qi.pop_back();
+ 
+         // Add current element at the rear of Qi
+        Qi.push_back(i);
+    }
+ 
+    // Print the maximum element of last window
+    b.push_back(arr[Qi.front()]);
+    return b;
+    
+}
