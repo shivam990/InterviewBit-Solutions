@@ -1,0 +1,36 @@
+string Solution::simplifyPath(string A) {
+    int n = A.length();
+    stack<string> path;
+    int index=0;
+    while (index<n) {
+        string dir = "";
+        while (index<n && A[index] != '/') {
+            dir += A[index];
+            index += 1;
+        }
+        if (dir == ".") {
+            continue;
+        } else if (dir == "..") {
+            if (!path.empty()) {
+                path.pop();
+            }
+        } else if (dir != "") {
+            path.push(dir);
+        }
+        index += 1;
+    }
+    if (path.empty()) {
+        return "/";
+    }
+    
+    string res = "";
+    while (!path.empty()) {
+        string next = path.top();
+        path.pop();
+        reverse(next.begin(), next.end());
+        res += next;
+        res += "/";
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
