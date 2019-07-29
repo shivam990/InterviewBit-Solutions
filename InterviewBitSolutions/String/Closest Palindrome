@@ -1,0 +1,22 @@
+string Solution::solve(string str) {
+    int n = str.length();         
+    
+    // Counting number of characters  
+    // that should be changed. 
+    int count = 0; 
+    for (int i = 0; i < n/2; ++i)  
+        if (str[i] != str[n - i - 1])  
+            ++count; 
+    if(count == 1){
+        string str = "YES";
+        return str;
+    }
+    else if(count == 0 && n%2!=0){
+        string str = "YES";
+        return str;
+    }
+    else{
+        string str1 = "NO";
+        return str1;
+    }
+}
