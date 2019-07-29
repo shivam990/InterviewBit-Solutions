@@ -1,0 +1,35 @@
+void Solution::reverseWords(string &A) {
+    // rev stores the words of A in reverse order
+    vector<string> rev;
+    int n = A.length();
+    int index = 0;
+    while (index < n) {
+        // if a character is space, continue
+        while (index<n && A[index]==' ') {
+            index += 1;
+        }
+        
+        // for a non-space character, store it in a word string
+        string word = "";
+        while (index<n && A[index]!=' ') {
+            word += A[index];
+            index += 1;
+        }
+        if (word == "") {
+            break;
+        }
+        // add the word to rev
+        rev.insert(rev.begin(), word);
+    }
+    
+    // update the input string with rev words
+    A = "";
+    int m = rev.size();
+    for (int i=0; i<m; i++) {
+        A += rev[i];
+        // insert a single space character between words
+        if (i < m-1) {
+            A += " ";
+        }
+    }
+}
