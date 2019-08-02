@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+int Solution::lPalin(ListNode* A) {
+    ListNode *temp1,*temp2;
+    stack<int> s;
+    temp1 = A;
+    int z = 0;
+    while(temp1!=NULL){
+        z++;
+        temp1 = temp1->next;
+    }
+    if(z%2!=0){
+        int p = z/2 + 1,t = 0;
+    temp1 = A;
+    while(temp1!=NULL){
+        t++;
+        if(t == p)
+        break;
+        temp1 = temp1->next;
+    }
+    temp2 = temp1->next;
+    while(temp2!=NULL){
+        s.push(temp2->val);
+        temp2 = temp2->next;
+    }
+    temp1 = A;
+    while(!s.empty()){
+        if(temp1->val != s.top())
+        return 0;
+        temp1 = temp1->next;s.pop();
+    }
+    return 1;
+    }
+    else{
+      int p = z/2,t = 0;
+    temp1 = A;
+    while(temp1!=NULL){
+        t++;
+        if(t == p)
+        break;
+        temp1 = temp1->next;
+    }
+    temp2 = temp1->next;
+    while(temp2!=NULL){
+        s.push(temp2->val);
+        temp2 = temp2->next;
+    }
+    temp1 = A;
+    while(!s.empty()){
+        if(temp1->val != s.top())
+        return 0;
+        temp1 = temp1->next;s.pop();
+    }
+    return 1;  
+    }
+}
