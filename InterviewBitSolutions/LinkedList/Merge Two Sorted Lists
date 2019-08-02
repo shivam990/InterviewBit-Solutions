@@ -1,0 +1,67 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ListNode* Solution::mergeTwoLists(ListNode* A, ListNode* B) {
+    if(!A)
+    return B;
+    if(!B)
+    return A;
+    ListNode * temp1, *temp2;
+    temp1 = A; temp2 = B;
+    ListNode *start = NULL, *current = NULL;
+    while(temp1!=NULL && temp2!=NULL){
+        ListNode *newnode = (ListNode *)malloc(sizeof(ListNode));
+        newnode->next = NULL;
+        if(temp1->val <= temp2->val){
+            newnode->val = temp1->val;
+            temp1 = temp1->next;
+        }
+        else{
+            newnode->val = temp2->val;
+            temp2 = temp2->next;
+        }
+        if(start == NULL){
+            start = newnode;
+            current = newnode;
+        }
+        else{
+            current->next = newnode;
+            current = newnode;
+        }
+    }
+    while(temp1){
+        ListNode *newnode = (ListNode *)malloc(sizeof(ListNode));
+        newnode->next = NULL;
+        newnode->val = temp1->val;
+        temp1 = temp1->next;
+        if(start == NULL){
+            start = newnode;
+            current = newnode;
+        }
+        else{
+            current->next = newnode;
+            current = newnode;
+        }
+        
+    }
+    while(temp2){
+        ListNode *newnode = (ListNode *)malloc(sizeof(ListNode));
+        newnode->next = NULL;
+        newnode->val = temp2->val;
+        temp2 = temp2->next;
+        if(start == NULL){
+            start = newnode;
+            current = newnode;
+        }
+        else{
+            current->next = newnode;
+            current = newnode;
+        }
+    }
+    return start;
+}
