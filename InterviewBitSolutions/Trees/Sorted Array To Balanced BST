@@ -1,0 +1,22 @@
+TreeNode* sortedArrayToBST2(const vector<int> &A,int b,int e){
+         if(b>e)return NULL;
+    else if(b==e){
+        TreeNode *tmp = new TreeNode(A[b]);
+        return tmp;
+    }
+    else{
+        int mid = b+(e-b)/2;
+        TreeNode *tmp = new TreeNode(A[mid]);
+        tmp->left = sortedArrayToBST2(A,b,mid-1);
+        tmp->right = sortedArrayToBST2(A,mid+1,e);
+        return tmp;
+    }
+    }
+
+TreeNode* Solution::sortedArrayToBST(const vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    return sortedArrayToBST2(A,0,A.size()-1);
+}
