@@ -1,0 +1,19 @@
+void longest(TreeNode *A,int start,int data,int &res)
+ {
+     if(A==NULL)
+     return;
+     if(A->val == data)
+     start++;
+     else
+     start = 1;
+     res = max(start,res);
+     longest(A->left,start,A->val+1,res);
+     longest(A->right,start,A->val+1,res);
+ }
+int Solution::solve(TreeNode* A) {
+    if(A==NULL)
+    return 0;
+    int res = 0;
+    longest(A,0,A->val,res);
+    return res;
+}
