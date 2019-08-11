@@ -1,0 +1,22 @@
+bool present(TreeNode *A,int a){
+    if(!A) return 0;
+    if(A->val==a) return 1;
+    return (present(A->left,a) | present(A->right,a));
+}
+int helper(TreeNode *root,int B,int C){
+    if(!root)
+    return -1;
+    if(root->val == B || root->val == C)
+    return root->val;
+    int left = helper(root->left, B,C);
+    int right = helper(root->right, B,C);
+    if(left!=-1 && right!=-1)
+    return root->val;
+    else return left!=-1 ? left: right;
+}
+int Solution::lca(TreeNode* root, int B, int C) {
+    if(present(root,B) && present(root,C)){
+        return helper(root,B, C);
+    }
+    return -1;
+}
