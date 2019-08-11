@@ -1,0 +1,12 @@
+int sumNumber(TreeNode *root, int curSum) {
+            if (root == NULL) return curSum;
+            curSum = (curSum * 10 + root->val) % 1003;
+            if (root->left == NULL && root->right == NULL) return curSum;
+            if (!root->left) return sumNumber(root->right, curSum);
+            if (!root->right) return sumNumber(root->left, curSum);
+            return (sumNumber(root->left, curSum) + sumNumber(root->right, curSum)) % 1003;
+        }
+int Solution::sumNumbers(TreeNode* A) {
+    return sumNumber(A, 0);
+    
+}
