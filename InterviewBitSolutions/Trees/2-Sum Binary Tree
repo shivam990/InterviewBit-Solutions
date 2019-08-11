@@ -1,0 +1,45 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ void inorder(TreeNode *root, vector<int> &v){
+     stack<TreeNode *> s;
+     while(1){
+         while(root){
+             s.push(root);
+             root = root->left;
+         }
+         if(s.empty())
+         break;
+         root = s.top();s.pop();
+         v.push_back(root->val);
+         root = root->right;
+     }
+     
+     
+     /*if(root){
+       inorder(root->left, v);
+     v.push_back(root->val);
+     inorder(root->left, v);  
+     }*/
+ }
+int Solution::t2Sum(TreeNode* A, int B) {
+    vector<int> v;
+    inorder(A, v);
+    int n = v.size();
+    int i=0, j=n-1;
+    while(i<j){
+        if(v[i] + v[j] == B)
+        return 1;
+        if(v[i] + v[j] < B)
+        i++;
+        else
+        j--;
+    }
+    return 0;
+}
