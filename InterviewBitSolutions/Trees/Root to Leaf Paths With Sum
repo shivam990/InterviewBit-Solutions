@@ -1,0 +1,34 @@
+void helper(TreeNode* root, int sum, int paths[], int pathlen,vector<int> &cur, vector<vector<int> > &res){
+    if(!root)
+    return;
+    paths[pathlen] = root->val;
+    pathlen++;
+    if(!root->left && !root->right){
+        //print the array from 0 to pathlen
+        int cur_sum = 0;
+        for(int i=0;i<pathlen;i++){
+            cur_sum += paths[i];
+            cur.push_back(paths[i]);
+        }
+        if(cur_sum == sum){
+            res.push_back(cur);
+        }
+        cur.clear();
+    }
+    else{
+        helper(root->left, sum, paths, pathlen, cur, res);
+        helper(root->right, sum, paths, pathlen, cur, res);
+    }
+}
+vector<vector<int> > Solution::pathSum(TreeNode *root, int sum) {
+    int paths[1000];
+    int pathlen = 0;
+    vector<vector<int> > res;
+    vector<int> cur;
+    helper(root, sum, paths, pathlen, cur, res);
+    return res;
+    /*vector<vector<int> > res;
+    vector<int> cur;
+    pathSumHelper(root, sum, cur, res);
+    return res;*/
+}
