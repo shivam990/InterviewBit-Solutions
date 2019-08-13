@@ -1,0 +1,26 @@
+int pre;
+ 
+ TreeNode* rec(vector<int> &A, vector<int> &B,int low,int high)
+ {
+     if(low>high||pre>=A.size())
+     return NULL;
+     int i;
+    for( i=low;i<=high;i++)
+     {
+         if(B[i]==A[pre])
+         break;
+     }
+     
+     pre++;
+     
+     
+     TreeNode*root=new TreeNode(B[i]);
+     root->left=rec(A,B,low,i-1);
+     root->right=rec(A,B,i+1,high);
+     return root;
+ }
+TreeNode* Solution::buildTree(vector<int> &A, vector<int> &B) {
+ pre=0;
+ return rec(A,B,0,B.size()-1);
+
+}
