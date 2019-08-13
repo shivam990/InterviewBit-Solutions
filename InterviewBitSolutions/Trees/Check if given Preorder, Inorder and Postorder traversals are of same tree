@@ -1,0 +1,34 @@
+bool checktree(int *preorder,int *inorder, int *postorder, int len) {
+    if (len== 0)
+        return 1;
+    if (len == 1)
+        return (preorder[0] == inorder[0]) && (inorder[0] == postorder[0]);
+    int idx = -1;
+    for (int i = 0; i < len; ++i)
+        if (inorder[i] == preorder[0]) {
+            idx = i;
+            break;
+        }
+    if (idx == -1)
+        return 0;
+    int ret1 = checktree(preorder + 1, inorder, postorder, idx);
+    int ret2 = checktree(preorder + idx + 1, inorder + idx + 1, postorder + idx, len - idx - 1);
+    return (ret1 && ret2);
+}
+
+int Solution::solve(vector<int> &A, vector<int> &B, vector<int> &C) {
+    int n=A.size();
+    int inorder[n];
+    int preorder[n];
+    int postorder[n];
+    for (int i=0; i<n;++i)  
+        preorder[i]=A[i];
+    for (int i=0; i<n;++i)  
+        inorder[i]=B[i];
+    for (int i=0; i<n;++i)  
+        postorder[i]=C[i];
+    if(checktree(preorder,inorder,postorder,n))
+        return 1;
+    return 0;
+    
+}
