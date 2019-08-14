@@ -1,0 +1,88 @@
+const int N = 70000, MAX = 1000000000;
+
+int time_stemp;
+vector<int> edges[N + 1];
+int start[N + 1];
+int stop[N + 1];
+int bit[N + 1];
+
+void update(int idx, int val)                       // Binary indexed tree update. Add val in range [idx, N]. 
+{
+    while (idx <= N)
+    {
+        bit[idx] += val;
+        idx = idx + (idx & -idx);
+    }
+}
+
+int query(int idx)                                  // Binary indexed tree query. Return value at index idx.
+{
+    int ret = 0;
+    while (idx > 0)
+    {
+        ret += bit[idx];
+        idx = idx - (idx & -idx);
+    }
+    return ret;
+}
+
+void euler(int u, int p)                   
+{
+    start[u] = ++time_stemp;
+    for (int i = 0; i < edges[u].size(); i++)
+    {
+        int v = edges[u][i];
+        if (v != p)
+        {
+            euler(v, u);
+        }
+    }
+    stop[u] = time_stemp;
+}
+
+void set_globals()                                  // clear global variables
+{
+    time_stemp = 0;
+    fill_n(&bit[0], N + 1, 0);
+    for (int i = 1; i <= N; i++)
+    {
+        edges[i].clear();
+    }
+}
+
+vector<int> Solution::solve(vector<int> &val, vector<int> &u, vector<int> &v)
+{
+    int n = val.size();
+    set_globals();
+    for (int i = 0; i < n - 1; i++)
+    {
+        edges[u[i]].push_back(v[i]);
+        edges[v[i]].push_back(u[i]);
+    }
+    euler(1, 1);
+    vector<pair<int, int>> val_node(n);
+    for (int i = 0; i < n; i++)
+    {
+        val_node[i] = {val[i], i + 1};
+    }
+    sort(val_node.begin(), val_node.end());            // sort by non-decreasing order of value (not node but value)     
+    vector<pair<int , int>> pending;
+    vector<int> ans(n, N + 1);
+    for (int i = n - 1; i >= 0; i--)
+    {
+        int w = val_node[i].first;
+        int u = val_node[i].second;
+        if (i != n - 1 && val_node[i + 1].first != w)   // when different value appears then it is safe to update
+        {
+            for (int j = 0; j < pending.size(); j++)
+            {
+                update(pending[j].first, 1);
+                update(pending[j].second + 1, -1);
+            }
+            pending.clear();
+        }
+        ans[u - 1] = query(start[u]);
+        pending.push_back({start[u], stop[u]});         // take care of duplicate values 
+    }
+    return ans;
+}
