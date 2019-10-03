@@ -1,29 +1,40 @@
-class BSTIterator {
-    public:
-        stack<TreeNode *> myStack;
+vector<int> trav;
+int cur;
 
-        BSTIterator(TreeNode *root) {
-            pushAll(root);
-        }
+void func(TreeNode *ptr)
+{
+    if(!ptr)
+        return;
+    func(ptr->left);
+    trav.push_back(ptr->val);
+    func(ptr->right);
+}
 
-        /** @return whether we have a next smallest number */
-        bool hasNext() {
-            return !myStack.empty();
-        }
+BSTIterator::BSTIterator(TreeNode *root) 
+{
+    trav.clear();
+    cur=0;
+    func(root);
+}
 
-        /** @return the next smallest number */
-        int next() {
-            TreeNode *tmpNode = myStack.top();
-            myStack.pop();
-            pushAll(tmpNode->right);
-            return tmpNode->val;
-        }
+/** @return whether we have a next smallest number */
+bool BSTIterator::hasNext() 
+{
+    //cout<<cur<<" "<<trav.size()<<endl;
+    if(cur<trav.size())
+        return true;
+    else
+        return false;
+}
 
-    private:
-        void pushAll(TreeNode *node) {
-            while (node != NULL) {
-                myStack.push(node);
-                node = node->left;
-            }
-        }
-};
+/** @return the next smallest number */
+int BSTIterator::next() 
+{
+    //cout<<cur<<" ";
+    if(cur<trav.size())
+    {
+        int tmp = trav[cur];
+        cur++;
+        return tmp;
+    }
+}
