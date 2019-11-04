@@ -1,0 +1,60 @@
+int Solution::solve(vector<vector<int> > &mat) {
+    int r=mat.size();
+    int c=mat[0].size();
+    queue<pair<int,int> > q;
+    for(int i=0; i<r; i++){
+        for(int j=0;j<c;j++){
+            if(mat[i][j] == 2){
+                q.push(make_pair(i,j));
+            }
+        }
+    }
+    q.push(make_pair(-1,-1));
+    int count=0;
+    while(!q.empty()){
+        pair<int,int> temp=q.front();
+        q.pop();
+        if(q.empty()){
+            break;
+        }
+        if(temp.first==-1 && temp.second==-1){
+            count++;
+            q.push(temp);
+        }
+        else{
+            if(temp.first-1>=0 && mat[temp.first-1][temp.second]==1){
+                mat[temp.first-1][temp.second]=2;
+                q.push(make_pair(temp.first-1,temp.second));
+            }
+            if(temp.first+1<r && mat[temp.first+1][temp.second]==1){
+                mat[temp.first+1][temp.second]=2;
+                q.push(make_pair(temp.first+1,temp.second));
+            }
+            if(temp.second-1>=0 && mat[temp.first][temp.second-1]==1){
+                mat[temp.first][temp.second-1]=2;
+                q.push(make_pair(temp.first,temp.second-1));
+            }
+            if(temp.second+1<c && mat[temp.first][temp.second+1]==1){
+                mat[temp.first][temp.second+1]=2;
+                q.push(make_pair(temp.first,temp.second+1));
+            }
+        }
+    }
+    bool flag=true;
+    for(int i=0; i<r; i++){
+        for(int j=0; j<c; j++){
+            if(mat[i][j]==1){
+                flag=false;
+                break;
+            }
+        }
+    if(!flag)   break;
+    }
+    if(flag){
+        return count;
+    }
+    else{
+        return -1;
+    }
+}
+
